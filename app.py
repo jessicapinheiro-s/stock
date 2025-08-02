@@ -1,3 +1,7 @@
+import locale;
+
+locale.setlocale(locale.LC_ALL, 'Portuguese_Brazil.1252');
+
 estoque = [
     {"id": 1, "produto": "Mouse Gamer", "categoria": "Periféricos", "preco": 120.00,
         "quantidade": 35, "fornecedor": "Logitech", "estoque_minimo": 10},
@@ -21,12 +25,21 @@ estoque = [
         "quantidade": 18, "fornecedor": "Cooler Master", "estoque_minimo": 6},
 ]
 
-
 def main():
     print('| Iniciando o app');
-    print('Carregando opções..');
-    show_options();
+    print('| Carregando opções..');
 
+    while True:
+        get_input();
+        finalizar = input('Deseja finalizar?\nSim\nNão\n');
+
+        if(finalizar == 'Sim'):
+            print('Finalizando..');
+            break;
+    
+
+def get_input():
+    show_options();
     while True:
         optionSelected = input('Selecione a opção desejada: ');
 
@@ -35,7 +48,7 @@ def main():
                 if(
                     optionSelected == "Total de itens do estoque" or
                     optionSelected == "Valor total do estoque" or
-                    optionSelected == "Produtos com estoque baixo " or
+                    optionSelected == "Produtos com estoque baixo" or
                     optionSelected == "Valor por categoria" or
                     optionSelected == "Fornecedor com maior valor em produtos"
                 ):
@@ -45,23 +58,26 @@ def main():
             else:
                 print('Opção invalida, selecione outra')
         else:
-            print('Não conseguimos entender a sua mensagem :(')
+            print('Não conseguimos entender a sua mensagem :(');
 
     if(optionSelected == "Total de itens do estoque"):
-        print(total_produtos_estoque(estoque));
+        print(f'{total_produtos_estoque(estoque)} itens');
         pass;
     elif(optionSelected == "Valor total do estoque"):
-        print(total_valor_estoque(estoque));
+        valor_formatado = formatar_valor(total_valor_estoque(estoque))
+        print(valor_formatado);
         pass;
     elif(optionSelected == "Produtos com estoque baixo"):
         print(produtos_baixo_estoque(estoque, 20));
         pass;
     elif(optionSelected == "Valor por categoria"):
-        print(valor_by_categoria(estoque));
+        valor_formatado = formatar_valor(valor_by_categoria(estoque));
+        print(valor_formatado);
         pass;
     elif(optionSelected == "Fornecedor com maior valor em produtos"):
-        print(fornecedor_maior_valor(estoque));
-        pass;
+        maior = list(fornecedor_maior_valor(estoque))[0]['fornecedor'];
+        print(maior);
+        pass;     
 
 def show_options():
     print(
@@ -76,6 +92,8 @@ def show_options():
         '|---------------------------------------|'
     )
 
+def formatar_valor(valor):
+    return locale.currency(total_valor_estoque(estoque), grouping=True) if isinstance(valor, (int, float)) else 0;
 
 # Funções auxiliares
 def retirar_duplicata(arr_estoque):
@@ -86,7 +104,6 @@ def retirar_duplicata(arr_estoque):
     return arr_no_duplicata
 
 # Funções principais
-
 
 def total_produtos_estoque(arr_estoque):
     return sum(item['quantidade'] for item in arr_estoque)
@@ -134,4 +151,4 @@ def fornecedor_maior_valor(arr_estoque):
 
 
 if __name__ == '__main__':
-    main()
+    main();
