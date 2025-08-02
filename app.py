@@ -71,8 +71,7 @@ def get_input():
         print(produtos_baixo_estoque(estoque, 20));
         pass;
     elif(optionSelected == "Valor por categoria"):
-        valor_formatado = formatar_valor(valor_by_categoria(estoque));
-        print(valor_formatado);
+        valor_by_categoria(estoque);
         pass;
     elif(optionSelected == "Fornecedor com maior valor em produtos"):
         maior = list(fornecedor_maior_valor(estoque))[0]['fornecedor'];
@@ -130,8 +129,9 @@ def sum_by_item(name_to_filter, arr_estoque):
 
 
 def valor_by_categoria(arr_estoque):
-    categorias = list(set(item['categoria'] for item in arr_estoque))
-    return [sum_by_item(categoria, arr_estoque) for categoria in categorias]
+    categorias = list(set(item['categoria'] for item in arr_estoque));
+
+    itens = list(map(lambda item: print(f'| {item} | {formatar_valor(sum_by_item(item, arr_estoque)[item])} |'), list(categorias)));
 
 
 def fornecedor_maior_valor(arr_estoque):
