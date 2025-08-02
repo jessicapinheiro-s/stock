@@ -48,14 +48,19 @@ def main():
             print('Não conseguimos entender a sua mensagem :(')
 
     if(optionSelected == "Total de itens do estoque"):
+        print(total_produtos_estoque(estoque));
         pass;
     elif(optionSelected == "Valor total do estoque"):
+        print(total_valor_estoque(estoque));
         pass;
-    elif(optionSelected == "Produtos com estoque baixo "):
+    elif(optionSelected == "Produtos com estoque baixo"):
+        print(produtos_baixo_estoque(estoque, 20));
         pass;
     elif(optionSelected == "Valor por categoria"):
+        print(valor_by_categoria(estoque));
         pass;
     elif(optionSelected == "Fornecedor com maior valor em produtos"):
+        print(fornecedor_maior_valor(estoque));
         pass;
 
 def show_options():
